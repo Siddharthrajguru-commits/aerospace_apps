@@ -1,0 +1,8 @@
+poliastro
+astropy
+matplotlib
+numpy
+plotly
+dash
+dash-bootstrap-components
+
