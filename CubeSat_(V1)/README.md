@@ -134,7 +134,7 @@ CubeSat_(V1)/
 ## Author
 
 Aerospace Engineering Undergraduate  
-Portfolio Project for TU Delft MSc Space Engineering Application
+-Siddharth Rajguru 
 
 ## License
 
