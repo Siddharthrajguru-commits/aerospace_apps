@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>AGNI-drishti Dashboard</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+<style>html,body,#map{height:100%;margin:0}#info-panel{position:absolute;top:12px;left:12px;z-index:1000;background:rgba(255,255,255,0.95);padding:10px 12px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:14px}#info-panel .title{font-weight:700;margin-bottom:6px}#info-panel .status{color:#444}.leaflet-container{background:#f0f6ff}</style>
+</head>
+<body>
+<div id="map"></div>
+<div id="info-panel"><div class="title">AGNI-drishti</div><div class="status" id="status">Click the map to scan for fires.</div></div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+const statusEl=document.getElementById('status');
+const map=L.map('map').setView([22.5937,78.9629],5);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; OpenStreetMap contributors'}).addTo(map);
+async function scanForFire(latlng){try{statusEl.textContent='Scanning...';const url=new URL('http://127.0.0.1:5000/predict');url.searchParams.set('lat',latlng.lat.toString());url.searchParams.set('lng',latlng.lng.toString());const response=await fetch(url.toString());if(!response.ok)throw new Error('Network response was not ok');const data=await response.json();const{fire_detected,confidence_score,nearest_hotspot_km}=data;const emoji=fire_detected?'🔥':'✅';const popupText=fire_detected?`Fire detected! (confidence: ${(confidence_score*100).toFixed(1)}%)`:`No fire detected. (confidence: ${((1-confidence_score)*100).toFixed(1)}%)`;const extra=nearest_hotspot_km!==undefined?`\nNearest hotspot: ${nearest_hotspot_km.toFixed(1)} km`:'';L.marker(latlng).addTo(map).bindPopup(`${emoji} ${popupText}${extra}`).openPopup();statusEl.textContent='Scan complete.'}catch(err){console.error(err);statusEl.textContent='Scan failed. Check backend server.'}}
+map.on('click',(e)=>{scanForFire(e.latlng)});
+async function loadHotspots(){try{const resp=await fetch('http://127.0.0.1:5000/hotspots');if(!resp.ok)return;const geojson=await resp.json();const features=geojson.features||[];features.forEach((f)=>{if(!f.geometry||f.geometry.type!=='Point')return;const[lng,lat]=f.geometry.coordinates;const conf=f.properties&&f.properties.conf?f.properties.conf:50;const color=conf>=80?'#d00000':conf>=60?'#f48c06':'#f9c74f';L.circleMarker([lat,lng],{radius:6,color,fillColor:color,fillOpacity:0.8,weight:1}).addTo(map).bindPopup(`Hotspot (conf: ${conf}%)`)})}catch(_){}}
+loadHotspots();
+</script>
+</body>
+</html>
