@@ -1,0 +1,11 @@
+# System-level dependencies for Streamlit Cloud deployment
+# CoolProp typically doesn't require system packages when installed via pip
+# However, if you encounter issues, you may need to add:
+# libssl-dev
+# libffi-dev
+
+# For most deployments, this file can remain empty
+# CoolProp is a pure Python package with compiled extensions included
+
+# Python package dependencies (install via pip)
+# reportlab>=3.6.0  # For PDF generation (NASA technical memorandums)
