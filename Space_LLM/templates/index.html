@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aether-Agent: Aerospace Research Agent</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <span class="logo-icon">🚀</span>
+                    <h1>Aether-Agent</h1>
+                </div>
+                <p class="subtitle">Aerospace Research Agent</p>
+                <div class="theme-toggle-container">
+                    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+                        <span class="theme-icon-light">☀️</span>
+                        <span class="theme-icon-dark">🌙</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="sidebar-content">
+                <div class="status-card">
+                    <h3>System Status</h3>
+                    <div class="status-item">
+                        <span class="status-label">Knowledge Base</span>
+                        <span class="status-value" id="chunk-count">Loading...</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-label">Papers</span>
+                        <span class="status-value" id="paper-count">Loading...</span>
+                    </div>
+                    <div class="status-indicator">
+                        <span class="indicator-dot" id="status-dot"></span>
+                        <span id="status-text">Initializing...</span>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <h3>About</h3>
+                    <p>Aether-Agent is an autonomous aerospace research agent that:</p>
+                    <ul>
+                        <li>🔍 Searches technical papers</li>
+                        <li>📚 Fetches new research when needed</li>
+                        <li>🧮 Performs orbital mechanics calculations</li>
+                        <li>📝 Provides citations for all claims</li>
+                    </ul>
+                    <p class="note"><strong>Anti-Hallucination:</strong> All answers are grounded in research papers with citations.</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="content-header">
+                <h2>Query Interface</h2>
+                <p>Ask questions about aerospace research, orbital mechanics, and satellite systems</p>
+            </div>
+
+            <!-- Query Input -->
+            <div class="query-section">
+                <div class="input-container">
+                    <textarea 
+                        id="query-input" 
+                        placeholder="e.g., What are the thermal management challenges for small satellites?"
+                        rows="3"
+                    ></textarea>
+                    <button id="submit-btn" class="submit-button">
+                        <span class="btn-text">Query</span>
+                        <span class="btn-icon">→</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Loading Indicator -->
+            <div id="loading-indicator" class="loading-indicator hidden">
+                <div class="spinner"></div>
+                <p>Agent is thinking...</p>
+            </div>
+
+            <!-- Answer Section -->
+            <div id="answer-section" class="answer-section hidden">
+                <div class="answer-header">
+                    <h3>Answer</h3>
+                    <button id="clear-btn" class="clear-button">Clear</button>
+                </div>
+                <div id="answer-content" class="answer-content"></div>
+            </div>
+
+            <!-- Citations Section -->
+            <div id="citations-section" class="citations-section hidden">
+                <h3>Citations</h3>
+                <div id="citations-list" class="citations-list"></div>
+            </div>
+
+            <!-- Thought Process Section -->
+            <div id="thought-process-section" class="thought-process-section hidden">
+                <div class="section-header">
+                    <h3>Thought Process</h3>
+                    <button id="toggle-thoughts" class="toggle-button">Show</button>
+                </div>
+                <div id="thought-process-content" class="thought-process-content hidden"></div>
+            </div>
+
+            <!-- Conversation History -->
+            <div id="history-section" class="history-section">
+                <h3>Recent Queries</h3>
+                <div id="history-list" class="history-list"></div>
+            </div>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+# Aether-Agent: Aerospace Research Agent
+# Core Dependencies
+
+# PDF Processing
+PyMuPDF>=1.23.0
+pymupdf>=1.23.0
+
+# Vector Database
+chromadb>=0.4.0
+
+# Text Processing & Embeddings
+langchain>=0.1.0
+langchain-community>=0.0.20
+sentence-transformers>=2.2.0
+
+# arXiv Integration
+arxiv>=1.4.0
+
+# Scientific Computing
+numpy>=1.24.0
+
+# Web UI
+streamlit>=1.28.0
+flask>=3.0.0
+
+# Evaluation Framework
+ragas>=0.1.0
+datasets>=2.14.0
+
+# Web Search (for Deep Research mode)
+duckduckgo-search>=4.0.0
+requests>=2.31.0
+
+# Mind Map Visualization
+graphviz>=0.20.0
+pygraphviz>=1.11
+
+# Utilities
+pathlib2>=2.3.7; python_version < '3.4'
